@@ -1,0 +1,38 @@
+extends layout 
+
+block header-actions
+    button#add-book-btn.btn.btn-light(type="button")
+        i.fa-solid.fa-plus 
+        span.btn__text Добавить книгу
+
+block content 
+    include _mixins 
+    h1.page-title Книги
+
+    .filters
+        button.tag.tag--active(type="button", data-status="all") Все
+        button.tag.tag(type="button", data-status="available") В наличии 
+        button.tag.tag(type="button", data-status="overdue") Просрочены
+    
+    .books 
+        table.books__table 
+            thead 
+                tr 
+                    th Название
+                    th Автор
+                    th Год
+                    th Статус
+                    th Действия
+            tbody#books-body 
+                each book in books 
+                    tr.books_row 
+                        td.books__title= book.title
+                        td.books__author= book.author
+                        td.books__year= book.year
+                        td.books__status 
+                            +badge(book)
+                        td.books__actions
+                            a.icon-btn(href=`/books/${book.id}`, title="Открыть")
+                                i.fa-solid.fa-eye
+                            button.icon-btn.icon-btn--danger(type="button", title="Удалить")
+                                i.fa-solid.fa-trash

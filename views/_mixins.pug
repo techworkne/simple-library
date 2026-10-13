@@ -1,0 +1,7 @@
+mixin badge(book)
+  if book.status === 'available'
+    span.badge.badge--ok В наличии
+  else if book.status === 'overdue'
+    span.badge.badge--danger Просрочена
+  else
+    span.badge.badge--neutral Выдана до #{formatDate(book.borrower.dueDate)}
