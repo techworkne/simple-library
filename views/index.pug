@@ -54,27 +54,27 @@ block content
 
     dialog#add-dialog.dialog 
         form#add-form
-        h2.dialog__title Добавить книгу
-        .field
-            label(for="add-title") Название
-            input#add-title.w3-input.w3-border(name="title", type="text", required)
-        .field 
-            label(for="add-author") Автор
-            input#add-author.w3-input.w3-border(name="author", type="text", required)
-        .field 
-            label(for="add-year") Год
-            input#add-year.w3-input.w3-border(name="year", type="number", min="1", required)
-        p#add-error.dialog__error
-        .dialog__actions 
-            button.btn.btn--secondary(type="button", data-close) Отмена
-            button.btn.btn--primary(type="submit") Добавить
+            h2.dialog__title Добавить книгу
+            .field
+                label(for="add-title") Название
+                input#add-title.w3-input.w3-border(name="title", type="text", required)
+            .field 
+                label(for="add-author") Автор
+                input#add-author.w3-input.w3-border(name="author", type="text", required)
+            .field 
+                label(for="add-year") Год
+                input#add-year.w3-input.w3-border(name="year", type="number", min="1", required)
+            p#add-error.dialog__error
+            .dialog__actions 
+                button.btn.btn--secondary(type="button", data-close) Отмена
+                button.btn.btn--primary(type="submit") Добавить
 
     dialog#delete-dialog.dialog 
         h2.dialog__title Удалить книгу?
         p#delete-text
         .dialog__actions 
             button.btn.btn--secondary(type="button", data-close) Отмена
-            button#delete-confirm.btn.btn--danger(tupe="button")
+            button#delete-confirm.btn.btn--danger(tupe="button") Удалить
 
             
 

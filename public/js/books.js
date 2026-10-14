@@ -110,7 +110,7 @@ addForm.addEventListener('submit', async (event) => {
         addDialog.close();
         loadBooks(currentStatus);
     } catch (error) {
-        addError.textContent = 'Неудалсь отправить данные. Попробуйте еще раз.';
+        addError.textContent = 'Не удалось отправить данные. Попробуйте еще раз.';
         console.error(error);
     }
 });
@@ -127,7 +127,7 @@ body.addEventListener('click', (event) => {
 
 deleteConfirm.addEventListener('click', async () => {
     try {
-        const response = await fetch(`/api/books/${deleted}`, { method: 'DELETE' });
+        const response = await fetch(`/api/books/${deleteId}`, { method: 'DELETE' });
         if (!response.ok) throw new Error(`Ошибка ${response.status}`);
         deleteDialog.close();
         loadBooks(currentStatus);

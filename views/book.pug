@@ -1,47 +1,75 @@
-extends layout 
+extends layout
 
 block content
-    a.back-link(href="/")
-        i.fa-solid.fa-arrow-left
-        | К списку
+  a.back-link(href="/")
+    i.fa-solid.fa-arrow-left
+    |  К списку
 
-    .card 
-        h1.card__title= book.title 
+  .card#card(data-id=book.id)
+    h1#card-title.card__title= book.title
 
-        .field 
-            label(for="title") Название
-            input#title.w3-input.w3-border(type="text", value=book.title)
-        .field 
-            label(for="author") Автор
-            input#author.w3-input.w3-border(type="text", value=book.author)
-        .field 
-            label(for="year") Год
-            input#year.w3-input.w3-border(type="number", value=book.year)
-        
-        .status(class=`status--${book.status}`)
-            if book.status === 'available'
-                p.status__title 
-                    i.fa-solid.fa-building-columns
-                    | В библиотеке
-            else
-                p.status__title 
-                    i.fa-solid.fa-user 
-                    | Выдана читателю
-                p.status__text 
-                    | #{book.borrower.name}, вернуть до #{formatDate(book.borrower.dueDate)}
+    .field
+      label(for="title") Название
+      input#title.w3-input.w3-border(type="text", value=book.title)
+    .field
+      label(for="author") Автор
+      input#author.w3-input.w3-border(type="text", value=book.author)
+    .field
+      label(for="year") Год выпуска
+      input#year.w3-input.w3-border(type="number", value=book.year)
 
-        .card__actions 
-            button.btn.btn--primary(type="button")
-                i.fa-solid.fa-floppy-disk
-                | Сохранить
-            if book.status === 'available'
-                button.btn.btn--primary(type="button")
-                    i.fa-solid.fa-user-plus 
-                    | Выдать
-            else 
-                button.btn.btn--secondary(type="button")
-                    i.fa-solid
-                    | Вернуть
-            button.btn.btn--danger.card__delete(type="button")
-                i.fa-solid.fa-trash 
-                | Удалить
+    p#card-message.card__message
+
+    .status(class=`status--${book.status}`)
+      if book.status === 'available'
+        p.status__title
+          i.fa-solid.fa-building-columns
+          |  В библиотеке
+      else
+        p.status__title
+          i.fa-solid.fa-user
+          |  Выдана читателю
+        p.status__text
+          | #{book.borrower.name}, вернуть до #{formatDate(book.borrower.dueDate)}
+
+    .card__actions
+      button#save-btn.btn.btn--primary(type="button")
+        i.fa-solid.fa-floppy-disk
+        |  Сохранить
+      if book.status === 'available'
+        button#checkout-btn.btn.btn--primary(type="button")
+          i.fa-solid.fa-user-plus
+          |  Выдать читателю
+      else
+        button#return-btn.btn.btn--secondary(type="button")
+          i.fa-solid.fa-rotate-left
+          |  Вернуть в библиотеку
+      button#delete-btn.btn.btn--danger.card__delete(type="button")
+        i.fa-solid.fa-trash
+        |  Удалить
+
+  if book.status === 'available'
+    dialog#checkout-dialog.dialog
+      form#checkout-form
+        h2.dialog__title Выдать читателю
+        .field
+          label(for="checkout-name") Имя читателя
+          input#checkout-name.w3-input.w3-border(name="name", type="text", required)
+        .field
+          label(for="checkout-date") Вернуть до
+          input#checkout-date.w3-input.w3-border(name="dueDate", type="date", required)
+        p#checkout-error.dialog__error
+        .dialog__actions
+          button.btn.btn--secondary(type="button", data-close) Отмена
+          button.btn.btn--primary(type="submit") Выдать
+
+  dialog#delete-dialog.dialog
+    h2.dialog__title Удалить книгу?
+    p#delete-text Книга «#{book.title}» будет удалена без возможности восстановления.
+    p#delete-error.dialog__error
+    .dialog__actions
+      button.btn.btn--secondary(type="button", data-close) Отмена
+      button#delete-confirm.btn.btn--danger(type="button") Удалить
+
+block scripts
+  script(src="/public/js/card.js", defer)

@@ -216,3 +216,7 @@ body {
 .dialog__title { margin: 0 0 16px; font-size: 20px; }
 .dialog__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
 .dialog__error { margin: 8px 0 0; min-height: 1em; color: var(--danger); font-size: 14px; }
+
+
+.card__message { min-height: 1.2em; margin: 0 0 8px; font-size: 14px; color: var(--danger); }
+.card__message--ok { color: #2e7d32; }
