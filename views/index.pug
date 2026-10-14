@@ -1,7 +1,7 @@
 extends layout 
 
 block header-actions
-    button#add-book-btn.btn.btn-light(type="button")
+    button#add-book-btn.btn.btn--light(type="button")
         i.fa-solid.fa-plus 
         span.btn__text Добавить книгу
 
@@ -11,8 +11,8 @@ block content
 
     .filters
         button.tag.tag--active(type="button", data-status="all") Все
-        button.tag.tag(type="button", data-status="available") В наличии 
-        button.tag.tag(type="button", data-status="overdue") Просрочены
+        button.tag(type="button", data-status="available") В наличии 
+        button.tag(type="button", data-status="overdue") Просрочены
     
     .books 
         table.books__table 
@@ -25,7 +25,7 @@ block content
                     th Действия
             tbody#books-body 
                 each book in books 
-                    tr.books_row 
+                    tr.books__row(data-id=book.id)
                         td.books__title= book.title
                         td.books__author= book.author
                         td.books__year= book.year
@@ -36,3 +36,47 @@ block content
                                 i.fa-solid.fa-eye
                             button.icon-btn.icon-btn--danger(type="button", title="Удалить")
                                 i.fa-solid.fa-trash
+    
+
+    template#book-row
+        tr.books__row
+            td.books__title     
+            td.books__author     
+            td.books__year     
+            td.books__status 
+                span.badge 
+            td.books__actions  
+                a.icon-btn(title="Открыть")
+                    i.fa-solid.fa-eye 
+                button.icon-btn.icon-btn--danger(type="button", title="Удалить")
+                    i.fa-solid.fa-trash
+
+
+    dialog#add-dialog.dialog 
+        form#add-form
+        h2.dialog__title Добавить книгу
+        .field
+            label(for="add-title") Название
+            input#add-title.w3-input.w3-border(name="title", type="text", required)
+        .field 
+            label(for="add-author") Автор
+            input#add-author.w3-input.w3-border(name="author", type="text", required)
+        .field 
+            label(for="add-year") Год
+            input#add-year.w3-input.w3-border(name="year", type="number", min="1", required)
+        p#add-error.dialog__error
+        .dialog__actions 
+            button.btn.btn--secondary(type="button", data-close) Отмена
+            button.btn.btn--primary(type="submit") Добавить
+
+    dialog#delete-dialog.dialog 
+        h2.dialog__title Удалить книгу?
+        p#delete-text
+        .dialog__actions 
+            button.btn.btn--secondary(type="button", data-close) Отмена
+            button#delete-confirm.btn.btn--danger(tupe="button")
+
+            
+
+block scripts 
+    script(src="/public/js/books.js", defer)

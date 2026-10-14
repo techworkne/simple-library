@@ -202,3 +202,17 @@ body {
   .card__actions .btn { width: 100%; justify-content: center; }
   .card__delete { margin-left: 0; }
 }
+
+
+.dialog {
+  width: 90%;
+  max-width: 480px;
+  padding: 24px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+.dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.dialog__title { margin: 0 0 16px; font-size: 20px; }
+.dialog__actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
+.dialog__error { margin: 8px 0 0; min-height: 1em; color: var(--danger); font-size: 14px; }

@@ -1,23 +1,22 @@
 extends layout 
 
-block content 
-    include _mixins
+block content
     a.back-link(href="/")
-    i.fa-solid.fa-arrow-left
-    | К списку
+        i.fa-solid.fa-arrow-left
+        | К списку
 
     .card 
-        h1.card__title = book.title 
+        h1.card__title= book.title 
 
         .field 
             label(for="title") Название
             input#title.w3-input.w3-border(type="text", value=book.title)
         .field 
             label(for="author") Автор
-            input#title.w3-input.w3-border(type="text", value=book.author)
+            input#author.w3-input.w3-border(type="text", value=book.author)
         .field 
             label(for="year") Год
-            input#title.w3-input.w3-border(type="number", value=book.year)
+            input#year.w3-input.w3-border(type="number", value=book.year)
         
         .status(class=`status--${book.status}`)
             if book.status === 'available'
@@ -33,16 +32,16 @@ block content
 
         .card__actions 
             button.btn.btn--primary(type="button")
-            i.fa-solid 
+                i.fa-solid.fa-floppy-disk
                 | Сохранить
             if book.status === 'available'
                 button.btn.btn--primary(type="button")
-                i.fa-solid.fa-user-plus 
+                    i.fa-solid.fa-user-plus 
                     | Выдать
             else 
                 button.btn.btn--secondary(type="button")
-                i.fa-solid
+                    i.fa-solid
                     | Вернуть
             button.btn.btn--danger.card__delete(type="button")
-            i.fa-solid.fa-trash 
+                i.fa-solid.fa-trash 
                 | Удалить

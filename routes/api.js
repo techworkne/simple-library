@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express from 'express';
 import { readBooks, writeBooks, nextId } from '../storage.js'
 import { withStatus, today } from '../helpers.js';
 
@@ -11,15 +11,15 @@ function checkFields(body) {
     const author = String(body.author ?? '').trim();
     const year = Number(body.year);
     if (!title || !author) return { error: 'Укажите название и автора' };
-    if (!Number.isInteger(year) | year < 1 | year > new Date().getFullYear()) {
+    if (!Number.isInteger(year) || year < 1 || year > new Date().getFullYear()) {
         return { error: "Неккоректный год" };
     }
-    return { data: { title, author, data } };
+    return { data: { title, author, year } };
 }
 
 router.get('/', (req, res) => {
     const { status = 'all' } = req.query;
-    if (!['all', 'avalable', 'overdue', 'issued'].includes(status)) {
+    if (!['all', 'available', 'overdue', 'issued'].includes(status)) {
         return res.status(400).json({ message: 'Неизвестный фильтр status ' });
     }
     let books = readBooks().map(withStatus);
@@ -29,25 +29,25 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const book = findBook(readBooks(), req.params.id);
-    if (!book) return res.status(400).json({ message: 'Книга не найдена' });
+    if (!book) return res.status(404).json({ message: 'Книга не найдена' });
     res.json(withStatus(book));
 });
 
 
 // добавить книгу
-router.post('/', (res, req) => {
+router.post('/', (req, res) => {
     const { data, error } = checkFields(req.body);
     if (error) return res.status(400).json({ message: error });
     const books = readBooks();
     const book = { id: nextId(books), ...data, borrower: null };
     books.push(book);
-    writeBooks(book);
-    res.status(201).join(withStatus(book));
+    writeBooks(books);
+    res.status(201).json(withStatus(book));
 });
 
 
 // изменить инфо
-router.put('/:id', (res, req) => {
+router.put('/:id', (req, res) => {
     const { data, error } = checkFields(req.body);
     if (error) return res.status(400).json({ message: error });
 
